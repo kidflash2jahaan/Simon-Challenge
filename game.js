@@ -17,8 +17,9 @@ function nextSequence() {
 
 $(".btn").on("click", function (event) {
     let userChosenColor = event.target.id
-    
     userClickPattern.push(userChosenColor)
+    
+    playAnimation(userChosenColor)
 })
 
 nextSequence()
