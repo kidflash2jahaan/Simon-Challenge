@@ -40,10 +40,17 @@ $(document).on("keypress", function () {
 $(".btn").on("click", function (event) {
     let userChosenColor = event.target.id
     userClickPattern.push(userChosenColor)
-    playAnimation(userChosenColor, true)
+    playAnimation(userChosenColor, clicked = true)
 
     if (userChosenColor !== gamePattern[gamePattern.length - 1]) {
-        // TODO: Game over
+        $("#level-title").text("Game Over, Press Any Key to Restart")
+        new Audio("sounds/wrong.mp3").play()
+        $("body").addClass("game-over")
+        
+        setTimeout(function () {
+            $("body").removeClass("game-over")
+        }, 200)
+        
     } else if (userClickPattern.length === gamePattern.length) {
         nextSequence()
     }
