@@ -13,7 +13,7 @@ function playAnimation(color, clicked = false) {
         }, 100)
     }
     new Audio("sounds/" + color + ".mp3").play()
-    
+
     console.log(gamePattern)
     console.log(userClickPattern)
 }
@@ -21,7 +21,7 @@ function playAnimation(color, clicked = false) {
 function nextSequence() {
     level++
     $("#level-title").text("Level " + level)
-    
+
     userClickPattern = [];
 
     let randomNumber = Math.floor(Math.random() * 4);
@@ -33,6 +33,11 @@ function nextSequence() {
     }, 1000)
 }
 
+function restart() {
+    level = 0;
+    gamePattern = []
+}
+
 $(document).on("keypress", function () {
     if (level === 0) nextSequence()
 })
@@ -42,15 +47,17 @@ $(".btn").on("click", function (event) {
     userClickPattern.push(userChosenColor)
     playAnimation(userChosenColor, clicked = true)
 
-    if (userChosenColor !== gamePattern[gamePattern.length - 1]) {
+    if (userChosenColor !== gamePattern[userClickPattern.length - 1]) {
         $("#level-title").text("Game Over, Press Any Key to Restart")
         new Audio("sounds/wrong.mp3").play()
         $("body").addClass("game-over")
-        
+
         setTimeout(function () {
             $("body").removeClass("game-over")
         }, 200)
         
+        restart()
+
     } else if (userClickPattern.length === gamePattern.length) {
         nextSequence()
     }
