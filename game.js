@@ -13,11 +13,16 @@ function playAnimation(color, clicked = false) {
         }, 100)
     }
     new Audio("sounds/" + color + ".mp3").play()
+    
+    console.log(gamePattern)
+    console.log(userClickPattern)
 }
 
 function nextSequence() {
     level++
     $("#level-title").text("Level " + level)
+    
+    userClickPattern = [];
 
     let randomNumber = Math.floor(Math.random() * 4);
     let randomChosenColor = buttonColors[randomNumber]
@@ -35,7 +40,11 @@ $(document).on("keypress", function () {
 $(".btn").on("click", function (event) {
     let userChosenColor = event.target.id
     userClickPattern.push(userChosenColor)
-
     playAnimation(userChosenColor, true)
-    nextSequence()
+
+    if (userChosenColor !== gamePattern[gamePattern.length - 1]) {
+        // TODO: Game over
+    } else if (userClickPattern.length === gamePattern.length) {
+        nextSequence()
+    }
 })
